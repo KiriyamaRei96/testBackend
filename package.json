@@ -12,5 +12,9 @@
     "@types/express": "^4.17.17",
     "@types/node": "^20.2.5",
     "typescript": "^5.0.4"
-  }
+  },
+  "scripts": {
+    "start": "node dist/index.js"
+  },
+  "type": "module"
 }
