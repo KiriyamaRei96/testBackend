@@ -12,11 +12,14 @@ const port = 3000;
 // request logger
 app.use((0, morgan_1.default)("combined"));
 // template engine
-app.engine("handlebars", (0, express_handlebars_1.engine)());
-app.set("view engine", "handlebars");
+app.engine("hbs", (0, express_handlebars_1.engine)({ extname: ".hbs" }));
+app.set("view engine", "hbs");
 app.set("views", path_1.default.join(__dirname, "../src/resources/views"));
 app.get("/", (req, res) => {
-    res.render("home");
+    res.render("home", { title: "Home" });
+});
+app.get("/news", (req, res) => {
+    res.render("news", { title: "News" });
 });
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
