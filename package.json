@@ -2,7 +2,7 @@
   "name": "test_backend",
   "version": "1.0.0",
   "description": "test express js",
-  "main": "index.ts",
+  "main": "dist/src/index.ts",
   "repository": "https://github.com/KiriyamaRei96/backend.git",
   "license": "MIT",
   "dependencies": {
