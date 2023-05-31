@@ -4,6 +4,9 @@ import path from "path";
 import { engine } from "express-handlebars";
 const app = express();
 const port = 3000;
+// static file
+app.use(express.static(path.join(__dirname, "../src/public")));
+
 // request logger
 app.use(morgan("combined"));
 // template engine

@@ -9,6 +9,8 @@ const path_1 = __importDefault(require("path"));
 const express_handlebars_1 = require("express-handlebars");
 const app = (0, express_1.default)();
 const port = 3000;
+// static file
+app.use(express_1.default.static(path_1.default.join(__dirname, "../src/public")));
 // request logger
 app.use((0, morgan_1.default)("combined"));
 // template engine
