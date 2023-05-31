@@ -7,6 +7,8 @@ const app = express();
 const port = 3000;
 // body parser
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 // static file
 app.use(express.static(path.join(__dirname, "../src/public")));
 
