@@ -1,4 +1,4 @@
 h1 {
   text-decoration: underline;
   color: #00fca8;
-}
+  text-transform: capitalize; }
