@@ -3,6 +3,7 @@ import morgan from "morgan";
 import path from "path";
 import { engine } from "express-handlebars";
 import bodyParser from "body-parser";
+import routes from "./resources/routes";
 const app = express();
 const port = 3000;
 // body parser
@@ -18,20 +19,8 @@ app.use(morgan("combined"));
 app.engine("hbs", engine({ extname: ".hbs" }));
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "../src/resources/views"));
-
-app.get("/", (req, res) => {
-  res.render("home", { title: "Home" });
-});
-app.get("/search", (req, res) => {
-  res.render("search");
-});
-app.post("/search", (req, res) => {
-  console.log(req);
-  res.send("search");
-});
-app.get("/news", (req, res) => {
-  res.render("news", { title: "News" });
-});
+// routes init
+routes(app);
 //If no route is matched by now, it must be a 404
 
 app.use(function (req, res, next) {
