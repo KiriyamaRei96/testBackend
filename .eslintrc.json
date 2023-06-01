@@ -18,5 +18,5 @@
   "rules": {
     "prettier/prettier": ["error"]
   },
-  "ignorePatterns": ["*.js", "*.scss"]
+  "ignorePatterns": ["*.js", "*.scss", "*.json"]
 }
