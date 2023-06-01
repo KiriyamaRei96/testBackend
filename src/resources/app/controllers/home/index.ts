@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 function home(req: Request, res: Response) {
-  res.render("home", { title: "Trang chủ" });
+  res.render('home', { title: 'Trang chủ' });
 }
 export default home;
