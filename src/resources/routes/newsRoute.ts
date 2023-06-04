@@ -1,9 +1,11 @@
 import express, { Router } from 'express';
 import news from '../app/controllers/news';
-import newsDetail from '../app/controllers/news/detail';
+import newsList from '../app/controllers/news/list';
+import createNews from '../app/controllers/news/createNews';
 
 const newsRoute: Router = express.Router();
+newsRoute.post('/create', createNews);
+newsRoute.get('/list', newsList);
 newsRoute.get('/', news);
-newsRoute.get('/:id', newsDetail);
 
 export default newsRoute;

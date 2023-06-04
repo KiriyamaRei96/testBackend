@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
@@ -5,14 +6,18 @@ import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
 import routes from './resources/routes';
 import connectDB from './resources/config/db';
+import multer from 'multer';
 const app = express();
 const port = 3000;
 // connect db
 connectDB();
 // body parser
+const forms = multer();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+// @ts-ignore
+app.use(forms.array());
+app.use(express.static('public'));
 // static file
 app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 
