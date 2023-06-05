@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 export interface Inew {
   name: string;
   des: string;
-  num: number;
+  type: 'tech' | 'sport' | 'techinfo';
   createdAt?: Date;
   updateddAt?: Date;
   img?: string;
@@ -17,7 +17,7 @@ const nameValidates = [
     },
 
     message: (props: any) => {
-      return 'Tên chỉ bao gồm chữ hoa và chữ thường.';
+      return 'text';
     },
   },
 ];
@@ -25,12 +25,17 @@ const newSchema = new Schema<Inew>({
   name: {
     type: String,
     required: true,
-    max: [255, 'Tên phải ít hơn 255 ký tự'],
-    min: [1, 'Tên phải nhiều hơn 1 ký tự'],
+    max: [255, 'max'],
+    min: [1, 'min'],
     validate: nameValidates,
   },
-  num: { type: Number, required: [true, 'trường này không được bỏ trống'] },
   des: { type: String, max: 600 },
+  type: {
+    type: String,
+    required: true,
+    default: 'techinfo',
+    enum: ['tech', 'sport', 'techinfo'],
+  },
   createdAt: { type: Date, default: () => Date.now() },
   updateddAt: { type: Date, default: () => Date.now() },
   img: { type: String },
