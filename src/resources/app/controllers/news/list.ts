@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import News from '../../models/news';
 async function newsList(req: Request, res: Response, next: NextFunction) {
   try {
-    const data = await News.find({});
-
+    const data = await News.find({
+      name: { $regex: req.body.name, $options: 'i' },
+    });
     res.json(data);
   } catch (err) {
     next(err);
