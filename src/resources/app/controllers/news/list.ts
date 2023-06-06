@@ -9,7 +9,14 @@ async function newsList(req: Request, res: Response, next: NextFunction) {
     if (req?.body?.type) {
       query.type = req?.body?.type;
     }
-    const data = await News.find(query);
+    const data = await News.find(query).populate({
+      path: 'relate',
+      model: 'new',
+      options: { _recursed: true },
+
+      // Get friends of friends - populate the 'relate' array for every friend
+      populate: { path: 'relate', model: 'new', options: { _recursed: true } },
+    });
 
     console.log(data.length);
     res.json(data);

@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 export interface Inew {
   name: string;
@@ -6,7 +6,7 @@ export interface Inew {
   type: 'tech' | 'sport' | 'techinfo';
   createdAt?: Date;
   updateddAt?: Date;
-  img?: string;
+  relate?: string[];
 }
 const nameValidates = [
   {
@@ -17,14 +17,14 @@ const nameValidates = [
     },
 
     message: (props: any) => {
-      return 'text';
+      return 'validate';
     },
   },
 ];
 const newSchema = new Schema<Inew>({
   name: {
     type: String,
-    required: true,
+    required: [true, 'required'],
     max: [255, 'max'],
     min: [1, 'min'],
     validate: nameValidates,
@@ -32,13 +32,17 @@ const newSchema = new Schema<Inew>({
   des: { type: String, max: 600 },
   type: {
     type: String,
-    required: true,
+    required: [true, 'required'],
     default: 'techinfo',
     enum: ['tech', 'sport', 'techinfo'],
   },
-  createdAt: { type: Date, default: () => Date.now() },
+  createdAt: { type: Date, default: () => Date.now(), immutable: true },
   updateddAt: { type: Date, default: () => Date.now() },
-  img: { type: String },
+  relate: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    ref: 'new',
+    default: [],
+  },
 });
 const News = model<Inew>('new', newSchema);
 export default News;
