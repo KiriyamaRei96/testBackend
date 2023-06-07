@@ -11,12 +11,12 @@ export interface Inew {
 const nameValidates = [
   {
     validator: function (v: any) {
-      const re =
-        /^[a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]*/gm;
-      return re.test(v);
+      const re = /[!@#$%^&*(),.?":{}|<>]/g;
+
+      return !re.test(v);
     },
 
-    message: (props: any) => {
+    message: () => {
       return 'validate';
     },
   },
@@ -29,13 +29,17 @@ const newSchema = new Schema<Inew>({
     min: [1, 'min'],
     validate: nameValidates,
     unique: true,
+    trim: true,
   },
   des: { type: String, max: 600 },
   type: {
     type: String,
     required: [true, 'required'],
     default: 'techinfo',
-    enum: ['tech', 'sport', 'techinfo'],
+    enum: {
+      values: ['tech', 'sport', 'techinfo'],
+      message: 'enum',
+    },
   },
   createdAt: { type: Date, default: () => Date.now(), immutable: true },
   updateddAt: { type: Date, default: () => Date.now() },

@@ -14,6 +14,7 @@ function error(err: any, req: Request, res: Response, next: NextFunction) {
     errorResponse.errors = errors;
   }
 
+  console.log([err]);
   res.status(400).json(errorResponse);
 }
 
