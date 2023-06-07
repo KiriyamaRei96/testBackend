@@ -6,6 +6,5 @@ import createNews from '../app/controllers/news/createNews';
 const newsRoute: Router = express.Router();
 newsRoute.post('/create', createNews);
 newsRoute.get('/list', newsList);
-newsRoute.get('/', news);
 
 export default newsRoute;

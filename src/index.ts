@@ -7,6 +7,8 @@ import bodyParser from 'body-parser';
 import routes from './resources/routes';
 import connectDB from './resources/config/db';
 import multer from 'multer';
+import error from './resources/app/controllers/error';
+
 const app = express();
 const port = 3000;
 // connect db
@@ -29,13 +31,14 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '..', 'src', 'resources', 'views'));
 // routes init
 routes(app);
-//If no route is matched by now, it must be a 404
 
+//If no route is matched by now, it must be a 404
 app.use(function (req, res, next) {
   res.status(404);
   res.send('404 Not Found');
   next();
 });
+app.use(error);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

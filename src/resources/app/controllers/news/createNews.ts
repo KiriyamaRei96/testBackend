@@ -13,13 +13,8 @@ async function createNews(req: Request, res: Response, next: NextFunction) {
     const data = await News.findById(newData.id).populate('relate');
     const resItem: ResponseType = { data, status: 1 };
     res.status(201).json(resItem);
-  } catch (err: any) {
-    const errors: any = {};
-    Object.keys(err.errors).forEach(
-      key => (errors[key] = err.errors[key].message),
-    );
-
-    res.status(400).json({ status: 0, errors });
+  } catch (err) {
+    next(err);
   }
 }
 export default createNews;

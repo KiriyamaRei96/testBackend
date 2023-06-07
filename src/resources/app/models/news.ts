@@ -28,6 +28,7 @@ const newSchema = new Schema<Inew>({
     max: [255, 'max'],
     min: [1, 'min'],
     validate: nameValidates,
+    unique: true,
   },
   des: { type: String, max: 600 },
   type: {

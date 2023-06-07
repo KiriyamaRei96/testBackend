@@ -1,25 +1,37 @@
 import { NextFunction, Request, Response } from 'express';
 import News from '../../models/news';
+import { ResponseType } from '../../../utils/type';
+import pagination from '../../../utils/pagination';
 async function newsList(req: Request, res: Response, next: NextFunction) {
   try {
     const query: any = {
       name: { $regex: req?.body?.name || '', $options: 'i' },
       des: { $regex: req?.body?.des || '', $options: 'i' },
     };
+    const { skipCount, paginationData } = await pagination(News, req?.body);
+
     if (req?.body?.type) {
       query.type = req?.body?.type;
     }
-    const data = await News.find(query).populate({
-      path: 'relate',
-      model: 'new',
-      options: { _recursed: true },
+    const data = await News.find(query, [], {
+      sort: {
+        createdAt: 'asc', //Sort by Date Added asc
+      },
+    })
+      .populate({
+        path: 'relate',
+        model: 'new',
+        options: { _recursed: true },
+      })
+      .skip(skipCount)
+      .limit(req.body.limit);
+    const response: ResponseType = {
+      status: 1,
+      data,
+      paginationData,
+    };
 
-      // Get friends of friends - populate the 'relate' array for every friend
-      populate: { path: 'relate', model: 'new', options: { _recursed: true } },
-    });
-
-    console.log(data.length);
-    res.json(data);
+    res.status(200).json(response);
   } catch (err) {
     next(err);
   }
