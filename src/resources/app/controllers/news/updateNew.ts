@@ -9,10 +9,15 @@ async function updateNew(req: Request, res: Response, next: NextFunction) {
       reqData.relate = reqData.relate.split(',');
     }
 
-    const item = await News.findById(reqData.id);
-    console.log(item);
-    const data = 'response';
-
+    await News.findByIdAndUpdate(reqData.id, reqData, {
+      runValidators: true,
+    });
+    const data = await News.findById(reqData.id).populate({
+      path: 'relate',
+      model: 'new',
+      options: { _recursed: true },
+    });
+    await data?.save();
     const resItem: ResponseType = { data, status: 1 };
     res.status(201).json(resItem);
   } catch (err) {

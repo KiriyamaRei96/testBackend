@@ -49,5 +49,10 @@ const newSchema = new Schema<Inew>({
     default: [],
   },
 });
+newSchema.pre('save', function (next) {
+  this.updateddAt = new Date(Date.now());
+  next();
+});
 const News = model<Inew>('new', newSchema);
+
 export default News;
