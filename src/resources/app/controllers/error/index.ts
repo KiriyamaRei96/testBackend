@@ -3,9 +3,13 @@ import { ErrorType } from '../../../utils/type';
 function error(err: any, req: Request, res: Response, next: NextFunction) {
   const errorResponse: ErrorType = {};
   const errors: any = {};
-
+  let status = 400;
   if (err.code === 11000) {
     errorResponse.error = 'unique';
+  }
+  if (err.error) {
+    errorResponse.error = err.error;
+    status = err.status;
   }
   if (err?.errors) {
     Object?.keys(err.errors).forEach(
@@ -15,7 +19,7 @@ function error(err: any, req: Request, res: Response, next: NextFunction) {
   }
 
   console.log([err]);
-  res.status(400).json(errorResponse);
+  res.status(status).json(errorResponse);
 }
 
 export default error;
