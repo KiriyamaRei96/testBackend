@@ -1,9 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { ErrorType } from '../../../utils/type';
 function error(err: any, req: Request, res: Response, next: NextFunction) {
-  const errorResponse: ErrorType = {};
+  const errorResponse: ErrorType = {
+    status: 0,
+  };
   const errors: any = {};
   let status = 400;
+
   if (err.code === 11000) {
     errorResponse.error = 'unique';
   }

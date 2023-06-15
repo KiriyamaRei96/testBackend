@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import mongoose, { Schema, model } from 'mongoose';
+import MongooseDelete, {
+  SoftDeleteDocument,
+  SoftDeleteModel,
+} from 'mongoose-delete';
 
 export interface Inew {
   name: string;
   des: string;
   type: 'tech' | 'sport' | 'techinfo';
-  createdAt?: Date;
-  updateddAt?: Date;
   relate?: string[];
 }
 const nameValidates = [
@@ -21,38 +24,50 @@ const nameValidates = [
     },
   },
 ];
-const newSchema = new Schema<Inew>({
-  name: {
-    type: String,
-    required: [true, 'required'],
-    max: [255, 'max'],
-    min: [1, 'min'],
-    validate: nameValidates,
-    unique: true,
-    trim: true,
-  },
-  des: { type: String, max: 600 },
-  type: {
-    type: String,
-    required: [true, 'required'],
-    default: 'techinfo',
-    enum: {
-      values: ['tech', 'sport', 'techinfo'],
-      message: 'enum',
+const newSchema = new Schema<Inew>(
+  {
+    name: {
+      type: String,
+      required: [true, 'required'],
+      max: [255, 'max'],
+      min: [1, 'min'],
+      validate: nameValidates,
+      unique: true,
+      trim: true,
+    },
+    des: { type: String, max: 600 },
+    type: {
+      type: String,
+      required: [true, 'required'],
+      default: 'techinfo',
+      enum: {
+        values: ['tech', 'sport', 'techinfo'],
+        message: 'enum',
+      },
+    },
+
+    relate: {
+      type: [mongoose.SchemaTypes.ObjectId],
+      ref: 'new',
+      default: [],
     },
   },
-  createdAt: { type: Date, default: () => Date.now(), immutable: true },
-  updateddAt: { type: Date, default: () => Date.now() },
-  relate: {
-    type: [mongoose.SchemaTypes.ObjectId],
-    ref: 'new',
-    default: [],
-  },
-});
+  { timestamps: true },
+);
 newSchema.pre('save', function (next) {
-  this.updateddAt = new Date(Date.now());
+  this.increment();
   next();
 });
-const News = model<Inew>('new', newSchema);
+newSchema.pre('findOne', function (next) {
+  console.log('Pre Find One');
+  next();
+});
+newSchema.plugin(MongooseDelete, {
+  deletedAt: true,
+  deletedByType: String,
+  overrideMethods: true,
+});
+// @ts-ignore
+const News: SoftDeleteModel = model<Inew>('new', newSchema);
 
 export default News;

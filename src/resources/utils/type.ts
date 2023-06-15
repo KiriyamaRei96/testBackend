@@ -5,6 +5,7 @@ interface ObjectType {
 export interface ErrorType {
   error?: string;
   errors?: any;
+  status?: 0;
 }
 export interface ResponseType {
   data?: any;
