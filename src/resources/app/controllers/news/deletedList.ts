@@ -6,16 +6,18 @@ async function deletedList(req: Request, res: Response, next: NextFunction) {
   try {
     const query: any = {
       name: { $regex: req?.body?.name || '', $options: 'i' },
+      deleted: true,
     };
+
     const { skipCount, paginationData } = await pagination(
-      News.findDeleted(query),
+      News.findWithDeleted(query),
       req?.body,
     );
     if (req?.body?.type) {
       query.type = req?.body?.type;
     }
 
-    const data = await News.findDeleted(query, [], {
+    const data = await News.findWithDeleted(query, [], {
       sort: {
         deletedAt: -1,
       },

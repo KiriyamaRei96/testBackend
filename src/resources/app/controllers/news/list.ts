@@ -7,7 +7,6 @@ async function newsList(req: Request, res: Response, next: NextFunction) {
     const query: any = {
       name: { $regex: req?.body?.name || '', $options: 'i' },
     };
-
     const { skipCount, paginationData } = await pagination(
       News.find(query, []),
       req?.body,

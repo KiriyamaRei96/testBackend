@@ -6,11 +6,12 @@ import updateNew from '../app/controllers/news/updateNew';
 import deleteNew from '../app/controllers/news/deleteNew';
 import deletedList from '../app/controllers/news/deletedList';
 import restoreNew from '../app/controllers/news/restoreNew';
+import forceDeleteNew from '../app/controllers/news/forceDeleteNew';
 
 const newsRoute: Router = express.Router();
 newsRoute.put('/update', updateNew);
-newsRoute.put('/restore', restoreNew);
-
+newsRoute.patch('/restore', restoreNew);
+newsRoute.delete('/forceDelete', forceDeleteNew);
 newsRoute.delete('/delete', deleteNew);
 newsRoute.post('/create', createNews);
 newsRoute.get('/list', newsList);
