@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { NextFunction, Request, Response } from 'express';
 import News from '../../models/news';
 import { ResponseType } from '../../../utils/type';
@@ -10,13 +11,14 @@ async function deletedList(req: Request, res: Response, next: NextFunction) {
     };
 
     const { skipCount, paginationData } = await pagination(
+      // @ts-ignore
       News.findWithDeleted(query),
       req?.body,
     );
     if (req?.body?.type) {
       query.type = req?.body?.type;
     }
-
+    // @ts-ignore
     const data = await News.findWithDeleted(query, [], {
       sort: {
         deletedAt: -1,

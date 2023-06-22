@@ -6,7 +6,7 @@ import { ResponseType } from '../../../utils/type';
 async function restoreNew(req: Request, res: Response, next: NextFunction) {
   try {
     const reqData = req.query;
-
+    // @ts-ignore
     await News?.restore({ _id: reqData.id });
 
     const resItem: ResponseType = { message: 'restored', status: 1 };

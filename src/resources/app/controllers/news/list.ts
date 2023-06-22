@@ -21,7 +21,7 @@ async function newsList(req: Request, res: Response, next: NextFunction) {
     })
       .populate({
         path: 'relate',
-        match: { deleteAt: null },
+
         model: 'new',
 
         options: { _recursed: true },

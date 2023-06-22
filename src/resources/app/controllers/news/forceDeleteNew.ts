@@ -5,6 +5,10 @@ import { ResponseType } from '../../../utils/type';
 async function forceDeleteNew(req: Request, res: Response, next: NextFunction) {
   try {
     const reqData = req.query;
+    await News.updateMany(
+      { relate: reqData.id },
+      { $pull: { relate: reqData.id } },
+    );
     await News.deleteOne({ _id: reqData.id });
 
     const resItem: ResponseType = { message: 'deleted', status: 1 };

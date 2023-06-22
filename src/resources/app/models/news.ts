@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Models, Schema, model } from 'mongoose';
 import MongooseDelete, {
   SoftDeleteDocument,
   SoftDeleteModel,
 } from 'mongoose-delete';
 
-export interface Inew {
+export interface Inew extends SoftDeleteDocument {
   name: string;
   des: string;
   type: 'tech' | 'sport' | 'techinfo';
@@ -67,7 +67,7 @@ newSchema.plugin(MongooseDelete, {
   deletedByType: String,
   overrideMethods: true,
 });
-// @ts-ignore
-const News: SoftDeleteModel = model<Inew>('new', newSchema);
+
+const News = model<Inew>('new', newSchema);
 
 export default News;
