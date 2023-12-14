@@ -2,6 +2,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
+
 import bodyParser from 'body-parser';
 import routes from './resources/routes';
 import connectDB from './resources/config/db';
