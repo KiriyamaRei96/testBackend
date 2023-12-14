@@ -2,7 +2,6 @@
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
-import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
 import routes from './resources/routes';
 import connectDB from './resources/config/db';
@@ -26,9 +25,9 @@ app.use(express.static(path.join(__dirname, '..', 'src', 'public')));
 // request logger
 app.use(morgan('combined'));
 // template engine
-app.engine('hbs', engine({ extname: '.hbs' }));
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, '..', 'src', 'resources', 'views'));
+// app.engine('hbs', engine({ extname: '.hbs' }));
+// app.set('view engine', 'hbs');
+// app.set('views', path.join(__dirname, '..', 'src', 'resources', 'views'));
 // routes init
 routes(app);
 
